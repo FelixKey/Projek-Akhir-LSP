@@ -24,5 +24,11 @@
     display: flex;
 }
 
+input[type=file]::file-selector-button {
+    background-color: #d32f2f;
+  }
 
-
+input[type=file]::file-selector-button:hover {
+    background-color: #c62828;
+}
+  

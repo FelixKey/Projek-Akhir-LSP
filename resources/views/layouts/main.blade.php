@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <nav class="fixed z-10 flex w-full bg-red-700">
+    <nav class="bg-red-700">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
             <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="assets/images/logo.png" class="h-10" alt="Logo" />
@@ -30,6 +30,15 @@
                     </li>
                     <li>
                         <a href="/contact" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Contact</a>
+                    </li>
+                    <li>
+                        <a href="/user" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">User</a>
+                    </li>
+                    <li>
+                        <a href="/mahasiswa" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Mahasiswa</a>
+                    </li>
+                    <li>
+                        <a href="/information" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Information</a>
                     </li>
                 </ul>
                 <!-- Search Bar -->
@@ -52,7 +61,7 @@
                         <a href="/login" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Log in</a>
                     </li>
                     <li>
-                        <a href="/register" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Sign Up</a>
+                        <a href="/user/register" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Sign Up</a>
                     </li>
                 </ul>
                 <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
@@ -60,6 +69,9 @@
                         <span class="sr-only">Open user menu</span>
                         <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-" alt="user photo">
                     </button>
+
+                    
+                    
                     <!-- Dropdown login menu -->
                     <div class="hidden my-4 text-base list-none bg-red-700 divide-y divide-gray-100 rounded-lg shadow border-2 border-gray-100" id="user-dropdown">
                         <div class="px-4 py-3">
@@ -75,12 +87,14 @@
                             </li>
                         </ul>
                     </div>
-                    <button data-collapse-toggle="navbar-user" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 " aria-controls="navbar-user" aria-expanded="false">
-                        <span class="sr-only">Open main menu</span>
-                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
-                        </svg>
-                    </button>
+                    <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                        <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
+                            <span class="sr-only">Open main menu</span>
+                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -93,7 +107,7 @@
 
     <!-- Footer -->
 
-    <footer class="bg-red-700">
+    <footer class="bg-red-700 inset-x-0 bottom-0">
         <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
             <div class="md:flex md:justify-between">
                 <div class="mb-6 md:mb-0 text-slate-50">

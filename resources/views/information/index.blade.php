@@ -1,6 +1,5 @@
 @extends('layouts.main')
 
-
 @section('content')
 <div class="container">
   <div class="card m-4">
@@ -21,19 +20,19 @@
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
         <tr class="text-center">
           <th scope="col" class="px-6 py-3">
-            ID User
+            Judul
           </th>
           <th scope="col" class="px-6 py-3">
-            Nama
+            Author
           </th>
           <th scope="col" class="px-6 py-3">
-            Email
+            Deskripsi
           </th>
           <th scope="col" class="px-6 py-3">
-            Role
+            Thumbnail
           </th>
           <th scope="col" class="px-6 py-3">
-            Bukti Pembayaran
+            Status
           </th>
           <th scope="col" class="px-6 py-3">
             Action
@@ -41,27 +40,27 @@
         </tr>
       </thead>
       <tbody>
-        @foreach($user as $key => $userData)
+        @foreach($information as $key => $informationData)
         <tr class="text-center">
-          <td class="px-6 py-3 ">{{ $userData->id }}</td>
-          <td class="px-6 py-3">{{ $userData->nama_user }}</td>
-          <td class="px-6 py-3">{{ $userData->email }}</td>
-          <td class="px-6 py-3">{{ $userData->role->nama_role }}</td>
-          <td class="px-6 py-3">{{ $userData->bukti_pembayaran }}</td>
+          <td class="px-6 py-3 ">{{ $informationData->judul }}</td>
+          <td class="px-6 py-3">{{ $informationData->user->nama_user}}</td>
+          <td class="px-6 py-3">{{ $informationData->deskripsi }}</td>
+          <td class="px-6 py-3">{{ $informationData->thumbnail}}</td>
+          <td class="px-6 py-3">{{ $informationData->status}}</td>
           <td class="px-6 py-3">
             <!-- Button detail -->
-            <a type="button" href="/user/detail/{{ $userData->id }}" class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Detail</a>
-          
-            <!-- //Button edit
-            <button type="button" href="/user/edit/{{ $userData->id }}" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">Edit</button> -->
+            <button type="button" class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Detail</button>
 
-            <!-- //Button delete
-            <form action="{{ route('user.delete', ['id' => $userData->id]) }}" method="post">
+            <!-- Button edit -->
+            <button type="button" href="/user/edit/{{ $informationData->id }}" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">Edit</button>
+
+            <!-- Button delete -->
+            <form action="{{ route('user.delete', ['id' => $informationData->id]) }}" method="post">
               @csrf
               @method('delete')
               <input type="hidden" name="_method" value="delete">
               <button type="submit" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 shadow-lg shadow-red-500/50 dark:shadow-lg dark:shadow-red-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Delete</button>
-            </form> -->
+            </form>
           </td>
         </tr>
         @endforeach
