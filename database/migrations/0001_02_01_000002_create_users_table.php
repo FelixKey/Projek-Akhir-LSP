@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('bukti_pembayaran');
             $table->unsignedBigInteger('id_role');
             $table->foreign('id_role')->references('id')->on('role');
-            $table->string('profile_picture')->default('user.png');
+            $table->string('profile_picture')->default('user.png')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
 

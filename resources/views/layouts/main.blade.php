@@ -17,7 +17,7 @@
     <nav class="bg-red-700">
         <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
             <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <img src="assets/images/logo.png" class="h-10" alt="Logo" />
+                <img src="{{ asset('assets/images/logo.png') }}" class="h-10" alt="Logo" />
                 <div class="text-sm text-slate-100 font-semibold ml-2">Penerimaan<br>Mahasiswa Baru</div>
             </a>
             <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-user">
@@ -58,8 +58,8 @@
                 </div>
                 <ul class="flex font-medium mx-4 md:p-0 mt-4 rounded-lg bg-red-700 md:space-x-8 md:flex-row md:mt-0 md:border-0">
                     <li>
-                        <a href="/login" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Log in</a>
-                    </li>
+                        <a href="/user/login" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Log in</a>
+                    </li>   
                     <li>
                         <a href="/user/register" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Sign Up</a>
                     </li>

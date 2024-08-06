@@ -7,6 +7,13 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+    function __construct()
+    {
+        $this->model = new User;
+        $this->table = $this->model->table;
+        $this->loc = 'user.';
+    }
+
     public function index()
     {
         $user = User::all();
@@ -37,75 +44,78 @@ class UserController extends Controller
         }
     }
 
-    public function edit(Request $request, $id)
-    {
-        $user = User::find($id);
-
-        if ($user) {
-            $user = User::all();
-            return view("user.edit", compact('user'));
-        } else {
-            return redirect()->route("user.index")->withErrors(['errors' => 'Data User tidak valid']);
-        }
-    }
-
-    public function update(Request $request, $id)
-    {
-        $user = User::find($id);
-
-        if ($user) {
-
-            $validation = $request->validate([
-                'nama_user' => 'required|max:255',
-                'email' => [
-                    'required',
-                    Rule::notIn(User::where([['email', '=', $request->email], ['id', '<>', $user->id]])->pluck('email')->toArray())
-                ],
-                'bukti_pembayaran' => 'required'
-            ]);
-
-            $user->nama_user = $request->nama_user;
-            $user->email = $request->email;
-            $user->bukti_pembayaran = $request->email;
-            $user->save();
-
-            $request->session()->flash("info", "Data user $request->nama_user berhasil diupdate!");
-            return redirect()->route("user.index");
-        } else {
-            return redirect()->route("user.index")->withErrors(['errors' => 'Data User tidak valid']);
-        }
-    }
-
     public function changePassView()
     {
         return view("user.change_password");
     }
 
+    function store(Request $request)
+    {
+        // $this->authorize('create',User::class);
+        $model = $this->model; 
+        $model->id = $request->id;
+        $model->nama_user = $request->nama_user;
+        $model->email = $request->email;
+        $model->password = bcrypt($request->password);
+        $model->tanggal_lahir = $request->tanggal_lahir;
+        $model->profile_picture = $request->profile_picture;
+        $profile_picture='';
+        if ($request->hasFile('profile_picture') && $request->file('profile_picture')->isValid()) {
+            $text = $request->profile_picture->getClientOriginalExtension();
+            $profile_picture = "foto-".time() . "." . $text;
+            $request->profile_picture->storeAs("public", $profile_picture);
+            $model->profile_picture = $profile_picture;
+        };
+        $model->bukti_pembayaran = $request->bukti_pembayaran;
+        $bukti_pembayaran='';
+        if ($request->hasFile('bukti_pembayaran') && $request->file('bukti_pembayaran')->isValid()) {
+            $text = $request->bukti_pembayaran->getClientOriginalExtension();
+            $bukti_pembayaran = "foto-".time() . "." . $text;
+            $request->bukti_pembayaran->storeAs("public", $bukti_pembayaran);
+            $model->bukti_pembayaran = $bukti_pembayaran;
+        };
+        $model->id_role = 2;
+        $model->save();
+        $request->session()->flash("info", "Data baru berhasil ditambahkan");
+        return redirect()->route('user.login');
+    }
     
+    public function edit(Request $request, $id)
+    {
+        $user = User::find($id);
 
-    public function store(Request $request){
+        if($user){
+            $user = User::all();
+            
+            return view("user.edit", compact('user'));
+        }else{
+            return redirect()->route("user.index")->withErrors(['errors' => 'Data user tidak valid']);
+        }
+    }
 
-        // $validation = $request->validate([
-        //     'nama_user' => 'required|max:255',
-        //     'email' => [
-        //         'required',
-        //         Rule::notIn(User::where('email', $request->email)->pluck('email')->toArray())
-        //     ],
-        //     'password' => 'required',
-        //     'tanggal_lahir' => 'required',
-        //     'bukti_pembayaran' => 'required',
-        //     'profile_picture' => 'required',
-        // ]);
+    function update(Request $request, $id) {
+        // $this->authorize('update',User::class);
+        $update = get_class($this->model)::find($id);
+        $update->user_id = $request->user_id;
+        $update->jenis_kelamin = $request->jenis_kelamin;
+        $update->password = bcrypt($request->password);
+        $update->jurusan = $request->jurusan;
+        $update->waktu_kuliah = $request->waktu_kuliah;
+        $update->agama = $request->agama;
+        $update->alamat = $request->alamat;
+        $update->tempat_lahir = $request->tempat_lahir;
+        $update->hasil_test = $request->hasil_test;
+        $update->status = $request->status;
+        $update->save();
+        $request->session()->flash("info", "Data berhasil diubah");
+        return redirect()->route('user.index');
+    }
 
-        $user = new user();
-        $increment = DB::select("SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA ='" . env('db_mahasiswabaru') . "' AND TABLE_NAME ='" . $user->getTable() . "'")[0]->AUTO_INCREMENT;
-        $user->id = "P".str_pad($increment,3,"0",STR_PAD_LEFT);
-        $user->nama_user = $request->nama_user;
-        $user->email = $request-> email;
-        $user->password = bcrypt($user->password);
-        $user->save();
-
-        $request->session()->flash("info", "Data user $request->nama_user (ID : $user->id_user) berhasil dibuat!");
-        return redirect()->route("user.register");
+    function destroy($id)
+    {
+        // $this->authorize('delete',User::class);
+        $destroy = get_class($this->model)::find($id);
+        $destroy->delete();
+        return redirect()->back();
     }
 }
