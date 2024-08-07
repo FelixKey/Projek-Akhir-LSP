@@ -18,9 +18,10 @@ return new class extends Migration
             $table->string('password');
             $table->date('tanggal_lahir');
             $table->string('bukti_pembayaran');
+            $table->string('profile_picture')->nullable();
             $table->unsignedBigInteger('id_role');
             $table->foreign('id_role')->references('id')->on('role');
-            $table->string('profile_picture')->default('user.png')->nullable();
+            $table->enum('status',['Aktif','Pending','Ditolak'])->default('Pending');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
 

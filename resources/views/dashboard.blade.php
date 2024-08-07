@@ -1,24 +1,17 @@
-@extends('layouts.main')
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('Dashboard') }}
+        </h2>
+    </x-slot>
 
-@section('content')
-<!-- Fullpage content -->
-<div class="ln-fullpage" data-navigation="true">
-
-  <!-- Section - Home -->
-  <section class="ln-section d-flex js-min-vh-100" data-anchor="home" data-tooltip="Home" data-ui="light" data-navbar="navbar-dark">
-    <div class="overlay overlay-advanced">
-      <div class="overlay-inner bg-image-holder bg-cover bg-bottom-center">
-        <img src="assets/images/bg_carousel.jpg" alt="background">
-      </div>
-      <div class="overlay-inner bg-dark opacity-70"></div>
-    </div>
-    <div class="container align-self-center text-white">
-      <div class="row">
-        <div class="col-12 col-lg-9 col-xl-6">
-
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900 dark:text-gray-100">
+                    {{ __("You're logged in!") }}
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </section>
-</div>
-@endsection
+</x-app-layout>

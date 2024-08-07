@@ -14,9 +14,9 @@
 </head>
 
 <body>
-    <nav class="bg-red-700">
-        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-3">
-            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+    <nav class="max-w-full bg-red-700">
+        <div class="flex flex-wrap items-center justify-between p-3">
+            <a class="flex justify-center ml-16 space-x-3 rtl:space-x-reverse">
                 <img src="{{ asset('assets/images/logo.png') }}" class="h-10" alt="Logo" />
                 <div class="text-sm text-slate-100 font-semibold ml-2">Penerimaan<br>Mahasiswa Baru</div>
             </a>
@@ -31,17 +31,21 @@
                     <li>
                         <a href="/contact" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Contact</a>
                     </li>
-                    <li>
-                        <a href="/user" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">User</a>
-                    </li>
-                    <li>
-                        <a href="/mahasiswa" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Mahasiswa</a>
-                    </li>
-                    <li>
-                        <a href="/information" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Information</a>
-                    </li>
+                    @auth
+                        @if (Auth::user()->isAdmin())
+                        <li>
+                            <a href="/user" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">User</a>
+                        </li>
+                        <li>
+                            <a href="/mahasiswa" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Mahasiswa</a>
+                        </li>
+                        <li>
+                            <a href="/information" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Information</a>
+                        </li>
+                        @endif
+                    @endauth
                 </ul>
-                <!-- Search Bar -->
+                <!-- Search Bar
                 <div>
                     <form class="max-w-md mx-auto">
                         <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
@@ -55,35 +59,42 @@
                             <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
                         </div>
                     </form>
+                </div> -->
+            </div>
+            <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-auth">
+                @guest
+                <div>
+                    <ul class="flex font-medium mx-4 md:p-0 mt-4 rounded-lg bg-red-700 md:space-x-8 ml-28 md:flex-row md:mt-0 md:border-0">
+                        <li>
+                            <a href="/user/login" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Log in</a>
+                        </li>
+                        <li>
+                            <a href="/user/register" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Sign Up</a>
+                        </li>
+                    </ul>
                 </div>
-                <ul class="flex font-medium mx-4 md:p-0 mt-4 rounded-lg bg-red-700 md:space-x-8 md:flex-row md:mt-0 md:border-0">
-                    <li>
-                        <a href="/user/login" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Log in</a>
-                    </li>   
-                    <li>
-                        <a href="/user/register" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Sign Up</a>
-                    </li>
-                </ul>
-                <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
+                @endguest
+                @auth
+                <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse my-4">
                     <button type="button" class="flex text-sm bg-slate-100 rounded-full md:me-0 focus:ring-4 focus:ring-slate-200" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                         <span class="sr-only">Open user menu</span>
-                        <img class="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-" alt="user photo">
+                        <img class="object-cover w-8 h-8 rounded-full shadow-lg" src="{{ asset('storage/' . (Auth::user()->profile_picture ?? 'user.png')) }}" alt="User profile picture" />
                     </button>
-
-                    
-                    
                     <!-- Dropdown login menu -->
                     <div class="hidden my-4 text-base list-none bg-red-700 divide-y divide-gray-100 rounded-lg shadow border-2 border-gray-100" id="user-dropdown">
                         <div class="px-4 py-3">
-                            <span class="block text-sm text-slate-50">Bonnie Green</span>
-                            <span class="block text-sm  text-slate-50 truncate">name@flowbite.com</span>
+                            <span class="block text-sm text-slate-50">{{Auth::user()->email}}</span>
+                            <span class="block text-sm  text-slate-50 truncate">{{Auth::user()->nama_user}}</span>
                         </div>
                         <ul class="py-2 font-semibold" aria-labelledby="user-menu-button">
                             <li>
-                                <a href="/dashboard" class="block px-4 py-2 text-sm text-slate-50 hover:bg-red-800">Dashboard</a>
-                            </li>
-                            <li>
-                                <a href="/" class="block px-4 py-2 text-sm text-slate-50 hover:bg-red-800 ">Sign out</a>
+                                <form id="keluar" method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
+                                this.closest('form').submit();" style="color:black" class="block px-4 py-2 text-sm text-slate-50 hover:bg-red-800">
+                                        <div class="text-white">Sign out</div>
+                                    </a>
+                                </form>
                             </li>
                         </ul>
                     </div>
@@ -96,6 +107,7 @@
                         </button>
                     </div>
                 </div>
+                @endauth
             </div>
         </div>
     </nav>

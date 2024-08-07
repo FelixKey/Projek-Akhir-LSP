@@ -4,9 +4,6 @@
 @section('content')
 <div class="container">
   <div class="w-full max-w-2xl p-4 my-10 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 ">
-    <!-- <div class="m-10 mt-44">
-      <img src="{{ asset('assets/images/logo_color.png') }}" class="h-44" alt="Logo" />
-    </div> -->
     <form class="space-y-6" enctype="multipart/form-data" method="POST" action="{{ route('user.store') }}">
       @csrf
       <div>
@@ -33,11 +30,11 @@
         </div>
         <div>
           <div>
-            <label for="file_input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload Foto Profil</label>
+            <label for="profile_picture" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload Foto Profil</label>
             <input type="file" name="profile_picture" id="profile_picture" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" />
           </div>
           <div>
-            <label for="file_input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload Bukti Pembayaran</label>
+            <label for="bukti_pembayaran" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload Bukti Pembayaran</label>
             <input type="file" name="bukti_pembayaran" id="bukti_pembayaran" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" required />
           </div>
         </div>

@@ -19,7 +19,6 @@ class Information extends Model
         'judul',
         'id_author',
         'deskripsi',
-        'thumbnail',
-        'status'
+        'thumbnail'
     ];
 }

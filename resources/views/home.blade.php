@@ -2,16 +2,17 @@
 
 
 @section('content')
-<div class="flex">
-  <img src="assets/images/bg_carousel.jpg" class="w-full opacity-40" alt="background">
-  <div class="text-overlay text-center absolute content-center p-32 mt-60">
-    <h2 class="text-4xl font-bold text-gray-800 md:text-4xl">Penerimaan Mahasiswa Baru Universitas Multi Data Palembang</h2>
-    <p class="text-gray-800 md:text-xl">
-      Universitas Multi Data Palembang membuka penerimaan mahasiswa baru untuk tahun ajaran 2024/2025.<br>Segera daftarkan diri anda sekarang juga.
-    </p>
-    <button class="bg-red-500 hover:bg-red-700 text-slate-50 font-bold py-2 px-4 rounded">
-      <a href="/register">Daftar Sekarang</a>
-    </button>
+<div class="container w-max-full justify-center">
+  <div class="bg-[url('/assets/bg_carousel.jpg')] my-56">
+    <div class="text-overlay justify-center">
+      <h2 class="text-4xl font-bold text-gray-800 md:text-4xl">Penerimaan Mahasiswa Baru Universitas Multi Data Palembang</h2>
+      <p class="text-gray-800 md:text-xl">
+        Universitas Multi Data Palembang membuka penerimaan mahasiswa baru untuk tahun ajaran 2024/2025.<br>Segera daftarkan diri anda sekarang juga.
+      </p>
+      <button class="bg-red-500 hover:bg-red-700 text-slate-50 font-bold py-2 px-4 rounded">
+        <a href="/user/register">Daftar Sekarang</a>
+      </button>
+    </div>
   </div>
 </div>
 <div class="container">
@@ -53,8 +54,6 @@
         </a>
       </div>
     </div>
-
   </div>
-
 </div>
 @endsection

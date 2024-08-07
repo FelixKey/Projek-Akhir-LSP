@@ -26,4 +26,8 @@ class Mahasiswa extends Model
         'profile_picture',
         'id_user'
     ];
+
+    public function user(){
+        return $this->hasOne(User::class,"id","id_user");
+    }
 }

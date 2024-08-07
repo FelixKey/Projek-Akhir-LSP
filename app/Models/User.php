@@ -17,6 +17,10 @@ class User extends Authenticatable
         return $this->belongsTo(Information::class,"id_author","id");
     }
 
+    public function mahasiswa(){
+        return $this->belongsTo(Mahasiswa::class,"profile_picture","id");
+    }
+
     public function role(){
         return $this->hasOne(Role::class,"id","id_role");
     }

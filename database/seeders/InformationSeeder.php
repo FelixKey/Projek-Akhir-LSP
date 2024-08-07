@@ -24,8 +24,6 @@ class InformationSeeder extends Seeder
                             sint occaecat cupidatat non proident sunt in culpa qui officia 
                             deserunt mollit anim id est laborum',
             'thumbnail'=> 'kosong',
-            'status'=> 'Tidak Aktif',
-
         ]);
     }
 }

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('program_studi',['Informatika','Sistem Informasi','Teknik Elektro','Manajemen Informatika','Manajemen','Akuntansi']);		
             $table->enum('jenis_kelamin',['Laki-laki','Perempuan']);
             $table->enum('agama',['Kristen','Katolik','Islam','Buddha','Hindu','Konghucu','Lainnya']);	
-            $table->enum('status',['Belum Divalidasi','Divalidasi']);
+            $table->enum('status',['Belum Divalidasi','Divalidasi','Ditolak'])->default('Belum Divalidasi');
             $table->rememberToken();
             $table->timestamps();
             $table->unsignedBigInteger('id_user');

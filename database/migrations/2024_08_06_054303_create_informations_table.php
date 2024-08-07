@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreign('id_author')->references('id')->on('users')->onDelete('cascade');
             $table->text('deskripsi');
             $table->string('thumbnail')->default('user.png');
-            $table->enum('status',['Aktif','Tidak Aktif']);
             $table->timestamps();
         });
     }

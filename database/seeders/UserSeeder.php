@@ -13,13 +13,14 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         \DB::table('users')->insert([
-            'nama_user' => 'Felix Kurniawan',
-            'email' => 'felix@gmail.com',
+            'nama_user' => 'Super Admin',
+            'email' => 'admin@gmail.com',
             'password' => \Hash::make('12345678'), 
             'tanggal_lahir' => '2003-07-18',
-            'bukti_pembayaran' => 'kosong',
+            'bukti_pembayaran' => 'bukti_pembayaran.png',
             'id_role' => '1',
-            'profile_picture' => 'kosong',
+            'status' => 'Aktif',
+            'profile_picture' => 'user.png',
         ]);
         
     }
