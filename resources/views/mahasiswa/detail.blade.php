@@ -37,59 +37,70 @@
                 </ul>
             </div>
         </div>
-        <div class="flex flex-col items-center pb-10">
-        <img class="object-cover w-24 h-24 mb-3 rounded-full shadow-lg" src={{ asset('storage/' . $mahasiswa->user->profile_picture) }} alt="User profile picture" />
-           
+        <div class="flex flex-col items-center pb-6">
+            <img class="object-cover w-24 h-24 mb-3 rounded-full shadow-lg" src={{ asset('storage/' . $mahasiswa->user->profile_picture) }} alt="User profile picture" />
             <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{$mahasiswa->nama}}</h5>
-            <div>
-                <a class="inline-flex items-center py-2 text-sm font-medium text-center">{{$mahasiswa->id_user}}</a>
-            </div>
-            <div>
-                <a class="inline-flex items-center py-2 text-sm font-medium text-center">{{$mahasiswa->alamat}}</a>
-            </div>
-            <div>
-                <a class="inline-flex items-center py-2 text-sm font-medium text-center">{{$mahasiswa->no_telp}}</a>
-            </div>
-            <div>
-                <a class="inline-flex items-center py-2 text-sm font-medium text-center">{{$mahasiswa->tanggal_lahir}}</a>
-            </div>
-            <div>
-                <a class="inline-flex items-center py-2 text-sm font-medium text-center">{{$mahasiswa->asal_sekolah}}</a>
-            </div>
-            <div>
-                <a class="inline-flex items-center py-2 text-sm font-medium text-center">{{$mahasiswa->program_studi}}</a>
-            </div>
-            <div>
-                <a class="inline-flex items-center py-2 text-sm font-medium text-center">{{$mahasiswa->jenis_kelamin}}</a>
-            </div>
-            <div>
-                <a class="inline-flex items-center py-2 text-sm font-medium text-center">{{$mahasiswa->agama}}</a>
-            </div>
-            <div>
-                <a class="inline-flex items-center py-2 text-sm font-medium text-center">{{$mahasiswa->status}}</a>
-            </div>
-            @if ($mahasiswa->status === 'Belum Divalidasi')
-            <div class="flex mt-10">
-                <!-- Validate Button Form -->
-                <form action="{{ route('mahasiswa.validate', $mahasiswa->id) }}" method="POST" class="inline-flex items-center">
-                    @csrf
-                    @method('POST')
-                    <button type="submit" class="inline-flex items-center m-2 px-4 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300">
-                        Validate
-                    </button>
-                </form>
-
-                <!-- Reject Button Form -->
-                <form action="{{ route('mahasiswa.reject', $mahasiswa->id) }}" method="POST" class="inline-flex items-center">
-                    @csrf
-                    @method('POST')
-                    <button type="submit" class="inline-flex items-center m-2 px-4 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300">
-                        Tolak
-                    </button>
-                </form>
-            </div>
-            @endif
         </div>
+        <div class="flex flex-col items-start pl-12 pb-10">
+            <div class="space-y-4">
+                <div class="my-2">
+                    <label class="block  text-sm font-semibold text-gray-700">User ID</label>
+                    <p class="inline-flex items-center py-2 text-sm font-medium text-gray-900">{{ $mahasiswa->id_user }}</p>
+                </div>
+                <div>
+                    <label class="block  text-sm font-semibold text-gray-700">Alamat</label>
+                    <p class="inline-flex items-center py-2 text-sm font-medium text-gray-900">{{ $mahasiswa->alamat }}</p>
+                </div>
+                <div>
+                    <label class="block  text-sm font-semibold text-gray-700">Nomor Telepon</label>
+                    <p class="inline-flex items-center py-2 text-sm font-medium text-gray-900">{{ $mahasiswa->no_telp }}</p>
+                </div>
+                <div>
+                    <label class="block  text-sm font-semibold text-gray-700">Tanggal Lahir</label>
+                    <p class="inline-flex items-center py-2 text-sm font-medium text-gray-900">{{ $mahasiswa->tanggal_lahir }}</p>
+                </div>
+                <div>
+                    <label class="block  text-sm font-semibold text-gray-700">Asal Sekolah</label>
+                    <p class="inline-flex items-center py-2 text-sm font-medium text-gray-900">{{ $mahasiswa->asal_sekolah }}</p>
+                </div>
+                <div>
+                    <label class="block  text-sm font-semibold text-gray-700">Program Studi</label>
+                    <p class="inline-flex items-center py-2 text-sm font-medium text-gray-900">{{ $mahasiswa->program_studi }}</p>
+                </div>
+                <div>
+                    <label class="block  text-sm font-semibold text-gray-700">Jenis Kelamin</label>
+                    <p class="inline-flex items-center py-2 text-sm font-medium text-gray-900">{{ $mahasiswa->jenis_kelamin }}</p>
+                </div>
+                <div>
+                    <label class="block  text-sm font-semibold text-gray-700">Agama</label>
+                    <p class="inline-flex items-center py-2 text-sm font-medium text-gray-900">{{ $mahasiswa->agama }}</p>
+                </div>
+                <div>
+                    <label class="block  text-sm font-semibold text-gray-700">Status</label>
+                    <p class="inline-flex items-center py-2 text-sm font-medium text-gray-900">{{ $mahasiswa->status }}</p>
+                </div>
+            </div>
+        </div>
+        @if ($mahasiswa->status === 'Belum Divalidasi')
+        <div class="flex justify-center item-center pb-6">
+            <!-- Validate Button Form -->
+            <form action="{{ route('mahasiswa.validate', $mahasiswa->id) }}" method="POST" class="inline-flex items-center">
+                @csrf
+                @method('POST')
+                <button type="submit" class="inline-flex items-center m-2 px-4 py-2 text-sm font-medium text-center text-white bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300">
+                    Validate
+                </button>
+            </form>
+            <!-- Reject Button Form -->
+            <form action="{{ route('mahasiswa.reject', $mahasiswa->id) }}" method="POST" class="inline-flex items-center">
+                @csrf
+                @method('POST')
+                <button type="submit" class="inline-flex items-center m-2 px-4 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300">
+                    Tolak
+                </button>
+            </form>
+        </div>
+        @endif
     </div>
 </div>
 @endsection

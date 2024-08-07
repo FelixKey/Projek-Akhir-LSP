@@ -39,15 +39,6 @@
           </div>
         </div>
       </div>
-      <div class="flex items-start">
-        <div class="flex items-start">
-          <div class="flex items-center h-5">
-            <input id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-red-300" />
-          </div>
-          <label for="remember" class="ms-2 text-sm font-medium text-gray-900 ">Remember me</label>
-        </div>
-        <a href="#" class="ms-auto text-sm text-red-700 hover:underline ">Lost Password?</a>
-      </div>
       <button type="submit" class="w-full text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Daftar Akun</button>
     </form>
   </div>

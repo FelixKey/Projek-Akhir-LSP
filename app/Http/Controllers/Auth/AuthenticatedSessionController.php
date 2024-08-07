@@ -16,7 +16,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): View
     {
-        return view('   home');
+        return view('home');
     }
 
     /**
@@ -25,10 +25,19 @@ class AuthenticatedSessionController extends Controller
     public function store(LoginRequest $request): RedirectResponse
     {
         $request->authenticate();
-
         $request->session()->regenerate();
+        if (Auth::user()->status == 'Aktif') {
+            
+            return redirect()->intended('/');
+        }
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/pending')->with('error', 'Akun anda belum aktif');
         
-        return redirect()->intended('/');
     }
 
     /**

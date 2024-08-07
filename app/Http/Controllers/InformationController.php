@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Information;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class InformationController extends Controller
 {
@@ -15,29 +16,64 @@ class InformationController extends Controller
         $this->loc = 'information.';
     }
 
-    public function index(){
+    public function index()
+    {
         $information = Information::all();
         return view("information.index", compact('information'));
     }
 
-    public function create(){
+    public function create()
+    {
         $information = Information::all();
         return view("information.create", compact('information'));
     }
 
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'judul' => 'required|max:255',
+            'deskripsi' => 'required',
+            'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+        ]);
+        $model = $this->model->find($id);
+        if (!$model) {
+            return redirect()->route('information.index')->withErrors(['error' => 'Data not found.']);
+        }
+        $model->judul = $request->input('judul');
+        $model->deskripsi = $request->input('deskripsi');
+        if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid()) {
+            if ($model->thumbnail) {
+                Storage::disk('public')->delete($model->thumbnail);
+            }
+            $text = $request->file('thumbnail')->getClientOriginalExtension();
+            $thumbnail = "foto-" . time() . "." . $text;
+            $request->file('thumbnail')->storeAs('public', $thumbnail);
+            $model->thumbnail = $thumbnail;
+        }
+        $model->save();
+        $request->session()->flash('info', 'Data Informasi berhasil diperbarui');
+        return redirect()->route('information.index');
+    }
+
+
     function store(Request $request)
     {
-        // $this->authorize('create',User::class);
-        $model = $this->model; 
+        $request->validate([
+            'judul' => 'required|max:255',
+            'deskripsi' => 'required',
+            'thumbnail' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
+        ]);
+
+        $model = $this->model;
         $model->id = $request->id;
         $model->judul = $request->judul;
         $model->id_author = Auth::user()->id;
         $model->deskripsi = $request->deskripsi;
         $model->thumbnail = $request->thumbnail;
-        $thumbnail='';
+        $thumbnail = '';
         if ($request->hasFile('thumbnail') && $request->file('thumbnail')->isValid()) {
             $text = $request->thumbnail->getClientOriginalExtension();
-            $thumbnail = "foto-".time() . "." . $text;
+            $thumbnail = "foto-" . time() . "." . $text;
             $request->thumbnail->storeAs("public", $thumbnail);
             $model->thumbnail = $thumbnail;
         };
@@ -61,9 +97,9 @@ class InformationController extends Controller
     {
         $information = Information::find($id);
 
-        if($information){
+        if ($information) {
             return view("information.edit", compact('information'));
-        }else{
+        } else {
             return redirect()->route("information.index")->withErrors(['errors' => 'Data Informasi tidak valid']);
         }
     }
@@ -71,18 +107,18 @@ class InformationController extends Controller
     public function destroy(Request $request, $id)
     {
         $information = Information::find($id);
-        
-        if($information){
-            try{
+
+        if ($information) {
+            try {
                 $information->delete();
                 $request->session()->flash("info", "Data Informasi berhasil dihapus!");
-            }catch(QueryException $ex){
+            } catch (QueryException $ex) {
                 return redirect()->route("information.index")->withErrors(['errors' => 'Data informasi gagal dihapus']);
             }
-        }else{
+        } else {
             $request->session()->flash("info", "Data informasi tidak valid");
         }
-        
+
         return redirect()->route("information.index");
     }
 }

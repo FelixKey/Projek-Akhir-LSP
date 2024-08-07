@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_author');
             $table->foreign('id_author')->references('id')->on('users')->onDelete('cascade');
             $table->text('deskripsi');
-            $table->string('thumbnail')->default('user.png');
+            $table->string('thumbnail')->default('thumbnail_default.jpg')->nullable();
             $table->timestamps();
         });
     }

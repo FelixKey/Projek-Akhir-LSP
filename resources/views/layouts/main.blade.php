@@ -13,8 +13,8 @@
 
 </head>
 
-<body>
-    <nav class="max-w-full bg-red-700 mb-10">
+<body class="flex flex-col min-h-screen">
+    <nav class="max-w-full bg-red-700">
         <div class="flex flex-wrap items-center justify-between p-3">
             <a class="flex justify-center ml-16 space-x-3 rtl:space-x-reverse">
                 <img src="{{ asset('assets/images/logo.png') }}" class="h-10" alt="Logo" />
@@ -32,34 +32,24 @@
                         <a href="/contact" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Contact</a>
                     </li>
                     @auth
-                        @if (Auth::user()->isAdmin())
-                        <li>
-                            <a href="/user" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">User</a>
-                        </li>
-                        <li>
-                            <a href="/mahasiswa" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Mahasiswa</a>
-                        </li>
-                        <li>
-                            <a href="/information" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Information</a>
-                        </li>
-                        @endif
+                    @if (Auth::user()->isAdmin())
+                    <li>
+                        <a href="/user" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">User</a>
+                    </li>
+                    <li>
+                        <a href="/mahasiswa" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Mahasiswa</a>
+                    </li>
+                    <li>
+                        <a href="/information" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Information</a>
+                    </li>
+                    @endif
+                    @if (Auth::user()->isCamaba())
+                    <li>
+                        <a href="/mahasiswa/create" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Daftar Mahasiswa</a>
+                    </li>
+                    @endif
                     @endauth
                 </ul>
-                <!-- Search Bar
-                <div>
-                    <form class="max-w-md mx-auto">
-                        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only ">Search</label>
-                        <div class="relative">
-                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                                <svg class="w-4 h-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
-                                </svg>
-                            </div>
-                            <input type="search" id="default-search" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-red-500 focus:border-red-500" placeholder="Search " required />
-                            <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2">Search</button>
-                        </div>
-                    </form>
-                </div> -->
             </div>
             <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-auth">
                 @guest
@@ -84,17 +74,16 @@
                         <img class="object-cover w-8 h-8 rounded-full shadow-lg" src="{{ asset('storage/' . (Auth::user()->profile_picture ?? 'user.png')) }}" alt="User profile picture" />
                     </button>
                     <!-- Dropdown login menu -->
-                    <div class="hidden my-4 text-base list-none bg-red-700 divide-y divide-gray-100 rounded-lg shadow border-2 border-gray-100" id="user-dropdown">
+                    <div class="hidden absolute right-0 z-10 w-48 mt-2 origin-top-right bg-red-700 divide-y divide-gray-100 rounded-lg shadow-lg border-2 border-gray-100" id="user-dropdown">
                         <div class="px-4 py-3">
-                            <span class="block text-sm my-2 text-slate-50 font-semibold">{{Auth::user()->role->nama_role}}</span>
-                            <span class="block text-sm my-2 text-slate-50">{{Auth::user()->email}}</span>
+                            <span class="block text-sm my-2 text-slate-50 font-semibold">{{ Auth::user()->role->nama_role }}</span>
+                            <span class="block text-sm my-2 text-slate-50">{{ Auth::user()->email }}</span>
                         </div>
                         <ul class="py-2 font-semibold" aria-labelledby="user-menu-button">
                             <li>
                                 <form id="keluar" method="POST" action="{{ route('logout') }}">
                                     @csrf
-                                    <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                this.closest('form').submit();" style="color:black" class="block px-4 py-2 text-sm text-slate-50 hover:bg-red-800">
+                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); this.closest('form').submit();" class="block px-4 py-2 text-sm text-slate-50 hover:bg-red-800">
                                         <div class="text-white">Sign out</div>
                                     </a>
                                 </form>
@@ -102,7 +91,7 @@
                         </ul>
                     </div>
                     <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-                        <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-sticky" aria-expanded="false">
+                        <button data-collapse-toggle="navbar-sticky" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 " aria-controls="navbar-sticky" aria-expanded="false">
                             <span class="sr-only">Open main menu</span>
                             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15" />
@@ -116,7 +105,7 @@
     </nav>
 
     <!-- Content Start -->
-    <div>
+    <div class="grow">
         @yield('content')
     </div>
 

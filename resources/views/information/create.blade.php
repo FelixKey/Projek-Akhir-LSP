@@ -3,16 +3,17 @@
 @section('content')
 
 @if (session()->has('info'))
-<div class="alert alert-success" role="alert">
-    {{ session()->get('info') }}
-</div>
-@endif
+@if(session('info'))
+    <div class="mb-4 p-4 bg-green-200 text-green-800 rounded">
+        {{ session('info') }}
+    </div>
+    @endif
 
-@foreach ($errors->all() as $error)
-<div class="alert alert-danger" role="alert">
-    {{ $error }}
-</div>
-@endforeach
+    @if(session('error'))
+    <div class="mb-4 p-4 bg-red-200 text-red-800 rounded">
+        {{ session('error') }}
+    </div>
+    @endif
 
 <div class="container my-10">
     <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 ">

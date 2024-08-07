@@ -15,12 +15,14 @@ class MahasiswaController extends Controller
         $this->loc = 'mahasiswa.';
     }
 
-    public function index(){
+    public function index()
+    {
         $mahasiswa = Mahasiswa::all();
         return view("mahasiswa.index", compact('mahasiswa'));
     }
 
-    public function create(){
+    public function create()
+    {
         $mahasiswa = Mahasiswa::all();
         return view("mahasiswa.create", compact('mahasiswa'));
     }
@@ -66,7 +68,6 @@ class MahasiswaController extends Controller
 
     function store(Request $request)
     {
-
         $validation = $request->validate([
             'nama' => 'required|max:255',
             'alamat' => 'required',
@@ -75,7 +76,16 @@ class MahasiswaController extends Controller
             'program_studi' => 'required',
             'jenis_kelamin' => 'required',
             'agama' => 'required',
+            'id_user' => 'required|exists:users,id'
         ]);
+
+        $existingRecord = $this->model->where('id_user', $request->id_user)->first();
+
+        if ($existingRecord) {
+            return redirect()->back()->withErrors([
+                'error' => 'Data mahasiswa with this user ID already exists.'
+            ]);
+        }
 
         $model = $this->model;
         $model->id = $request->id;
@@ -90,17 +100,51 @@ class MahasiswaController extends Controller
         $model->status = "Belum Divalidasi";
         $model->id_user = $request->id_user;
         $model->save();
-        $request->session()->flash("info", "Data baru berhasil ditambahkan");
+        $request->session()->flash("info", "Data Mahasiswa berhasil ditambahkan");
         return redirect()->route('mahasiswa.index');
     }
+
+    public function update(Request $request, $id)
+    {
+        $validation = $request->validate([
+            'nama' => 'required|max:255',
+            'alamat' => 'required',
+            'no_telp' => 'required',
+            'tanggal_lahir' => 'required',
+            'program_studi' => 'required',
+            'jenis_kelamin' => 'required',
+            'agama' => 'required',
+        ]);
+
+        $model = $this->model->find($id);
+        if (!$model) {
+            return redirect()->route('mahasiswa.index')->with('error', 'Data not found.');
+        }
+
+        $model->nama = $request->input('nama');
+        $model->alamat = $request->input('alamat');
+        $model->no_telp = $request->input('no_telp');
+        $model->asal_sekolah = $request->input('asal_sekolah');
+        $model->tanggal_lahir = $request->input('tanggal_lahir');
+        $model->program_studi = $request->input('program_studi');
+        $model->jenis_kelamin = $request->input('jenis_kelamin');
+        $model->agama = $request->input('agama');
+        $model->id_user = $request->input('id_user');
+
+        $model->save();
+        $request->session()->flash('info', 'Data berhasil diperbarui');
+
+        return redirect()->route('mahasiswa.index');
+    }
+
 
     public function edit(Request $request, $id)
     {
         $mahasiswa = Mahasiswa::find($id);
 
-        if($mahasiswa){
+        if ($mahasiswa) {
             return view("mahasiswa.edit", compact('mahasiswa'));
-        }else{
+        } else {
             return redirect()->route("mahasiswa.index")->withErrors(['errors' => 'Data mahasiswa tidak valid']);
         }
     }
@@ -108,18 +152,18 @@ class MahasiswaController extends Controller
     public function destroy(Request $request, $id)
     {
         $mahasiswa = Mahasiswa::find($id);
-        
-        if($mahasiswa){
-            try{
+
+        if ($mahasiswa) {
+            try {
                 $mahasiswa->delete();
                 $request->session()->flash("info", "Data Mahasiswa berhasil dihapus!");
-            }catch(QueryException $ex){
+            } catch (QueryException $ex) {
                 return redirect()->route("mahasiswa.index")->withErrors(['errors' => 'Data Mahasiswa gagal dihapus']);
             }
-        }else{
+        } else {
             $request->session()->flash("info", "Data Mahasiswa tidak valid");
         }
-        
+
         return redirect()->route("mahasiswa.index");
     }
 }

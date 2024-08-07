@@ -24,7 +24,7 @@ return new class extends Migration
             $table->enum('status',['Belum Divalidasi','Divalidasi','Ditolak'])->default('Belum Divalidasi');
             $table->rememberToken();
             $table->timestamps();
-            $table->unsignedBigInteger('id_user');
+            $table->unsignedBigInteger('id_user')->unique();
             $table->foreign('id_user')->references('id')->on('users')->onDelete('cascade');
         });
     }

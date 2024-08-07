@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -34,35 +34,10 @@ class UserController extends Controller
     //     return view("user.login", compact('user'));
     // }
 
-    public function loginView()
+    public function login()
     {
-        return view('user.login');
-    }
-
-    public function login(Request $request)
-    {
-        // Validate login input
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        // Attempt to find the user by email
-        $user = User::where('email', $request->input('email'))->first();
-
-        if ($user && $user->canLogin()) {
-            // Attempt to log in the user
-            if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
-                // Login successful
-                return redirect()->intended('home'); // Redirect to intended route or home
-            } else {
-                // Invalid credentials
-                return back()->withErrors(['password' => 'The provided password is incorrect.']);
-            }
-        } else {
-            // User is not active or doesn't exist
-            return back()->withErrors(['email' => 'The user is either inactive or does not exist.']);
-        }
+        $user = User::all();
+        return view("user.login", compact('user'));
     }
 
     public function detail(Request $request, $id)
@@ -92,7 +67,8 @@ class UserController extends Controller
             ],
             'password' => 'required',
             'tanggal_lahir' => 'required',
-            'bukti_pembayaran' => 'required',
+            'profile_picture' => 'nullable|image|max:2048',
+            'bukti_pembayaran' => 'nullable|file|mimes:jpeg,png,jpg|max:2048'
         ]);
 
         $model = $this->model;
@@ -163,26 +139,60 @@ class UserController extends Controller
         }
     }
 
-    function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
-        // $this->authorize('update',User::class);
-        $update = get_class($this->model)::find($id);
-        $update->id = $request->id;
-        $update->nama_user = $request->nama_user;
-        $update->password = bcrypt($request->password);
-        $update->tanggal_lahir = $request->tanggal_lahir;
-        $update->profile_picture = $request->profile_picture;
-        $update->bukti_pembayaran = $request->bukti_pembayaran;
-        $update->id_role = $request->id_role;
-        $update->status = $request->status;
-        $update->save();
-        $request->session()->flash("info", "Data berhasil diubah");
-        return redirect()->route('user.index');
+
+        $validation = $request->validate([
+            'nama_user' => 'required|max:255',
+            'email' => [
+                'required',
+                'email',
+                Rule::unique('users')->ignore($id)
+            ],
+            'password' => 'nullable',
+            'tanggal_lahir' => 'required',
+            'profile_picture' => 'nullable|image|max:2048',
+            'bukti_pembayaran' => 'nullable|file|mimes:jpeg,png,jpg|max:2048',
+        ]);	
+
+        $model = $this->model->where('id', $id)->first();
+        if (!$model) {
+            $request->session()->flash("error", "Data tidak ditemukan");
+            return redirect()->route('user.index');
+        }
+        $model->nama_user = $request->nama_user;
+        $model->email = $request->email;
+        if ($request->filled('password')) {
+            $model->password = bcrypt($request->password);
+        }
+        $model->tanggal_lahir = $request->tanggal_lahir;
+        if ($request->hasFile('profile_picture') && $request->file('profile_picture')->isValid()) {
+            if ($model->profile_picture && Storage::exists('public/' . $model->profile_picture)) {
+                Storage::delete('public/' . $model->profile_picture);
+            }
+            $text = $request->profile_picture->getClientOriginalExtension();
+            $profile_picture = "foto-" . time() . "." . $text;
+            $request->profile_picture->storeAs("public", $profile_picture);
+            $model->profile_picture = $profile_picture;
+        }
+        if ($request->hasFile('bukti_pembayaran') && $request->file('bukti_pembayaran')->isValid()) {
+            if ($model->bukti_pembayaran && Storage::exists('public/' . $model->bukti_pembayaran)) {
+                Storage::delete('public/' . $model->bukti_pembayaran);
+            }
+            $text = $request->bukti_pembayaran->getClientOriginalExtension();
+            $bukti_pembayaran = "bukti-" . time() . "." . $text;
+            $request->bukti_pembayaran->storeAs("public", $bukti_pembayaran);
+            $model->bukti_pembayaran = $bukti_pembayaran;
+        }
+        $model->status = $request->status ?? $model->status;
+        $model->save();
+
+        $request->session()->flash("info", "Data berhasil diperbarui");
+        return redirect()->route('user.detail', ['id' => $id]); 
     }
 
     function destroy($id)
     {
-        // $this->authorize('delete',User::class);
         $destroy = get_class($this->model)::find($id);
         $destroy->delete();
         return redirect()->back();

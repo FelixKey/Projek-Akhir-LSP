@@ -1,23 +1,23 @@
 @extends('layouts.main')
 
 @section('content')
+@if(session('info'))
+<div class="mb-4 p-4 bg-green-200 text-green-800 rounded">
+    {{ session('info') }}
+</div>
+@endif
+
+@if(session('error'))
+<div class="mb-4 p-4 bg-red-200 text-red-800 rounded">
+    {{ session('error') }}
+</div>
+@endif
 <div class="container">
-  <div class="card m-4">
-    <h1 class="text-4xl text-center font-bold" id="title_informasi">DATA INFORMASI</h1>
-    @if (session()->has('info'))
-    <div class="alert alert-success" role="alert">
-      {{ session()->get('info') }}
-    </div>
-    @endif
-    @foreach ($errors->all() as $error)
-    <div class="alert alert-danger" role="alert">
-      {{ $error }}
-    </div>
-    @endforeach
-    <div class="ml-6">
+  <div class="m-10">
+    <h1 class="text-4xl text-center text-stone-700 font-bold" id="title_informasi">DATA INFORMASI</h1>
+    <div class="m-6">
       <a type="button" href="/information/create" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 ">Tambah Data</a>
     </div>
-
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg m-4">
       <table class="w-full text-sm text-left rtl:text-right text-gray-500">
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
@@ -44,7 +44,7 @@
           <tr class="text-center">
             <td class="px-6 py-3 ">{{ $informationData->judul }}</td>
             <td class="px-6 py-3">{{ $informationData->user->nama_user}}</td>
-            <td class="px-6 py-3">{{ $informationData->deskripsi }}</td>
+            <td class="truncate max-w-xs px-6 py-3">{{ $informationData->deskripsi }}</td>
             <td class="px-6 py-3">{{ $informationData->thumbnail}}</td>
             <td class="px-6 py-3">
               <!-- Button detail -->

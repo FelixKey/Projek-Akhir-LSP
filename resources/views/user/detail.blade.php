@@ -21,7 +21,7 @@
                 </svg>
             </button>
             <!-- Dropdown menu -->
-            <div id="dropdown" class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow max-w-4">
+            <div id="dropdown" class="z-10 hidden text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow w-44">
                 <ul class="py-2" aria-labelledby="dropdownButton">
                     <li>
                         <a href="/user/edit/{{ $user->id }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 ">Edit</a>

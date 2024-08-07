@@ -2,10 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="m-4 text-center">
-        <div><a class="font-bold">{{$information->judul}}</a></div>
-    </div>
-    <div class="m-4 w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow ">
+    <div class="m-4 w-full max-w-2xl bg-white border border-gray-200 rounded-lg shadow ">
         <div class="flex justify-between px-4 pt-4">
             <div>
                 <a href="{{ route('information.index') }}" class="inline-flex items-center hover:text-red-800 font-medium rounded-lg text-sm px-2.5 py-2.5 text-center me-2 mb-2">
@@ -13,6 +10,9 @@
                         <path stroke="#b91c1c" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13" />
                     </svg>
                 </a>
+            </div>
+            <div class="content-center text-2xl font-bold">
+                DETAIL INFORMASI
             </div>
             <button id="dropdownButton" data-dropdown-toggle="dropdown" class="inline-block text-gray-500  focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg text-sm p-1.5" type="button">
                 <span class="sr-only">Open dropdown</span>
@@ -37,11 +37,11 @@
                 </ul>
             </div>
         </div>
-        <div class="flex flex-col items-center pb-10">
-            <img class="object-cover w-24 h-24 mb-3 rounded-full shadow-lg" src={{ asset('storage/' . $information->thumbnail) }} alt="User profile picture" />
+        <div class="flex flex-col text-center pb-10 m-6">
+            <img class="object-cover mb-3 shadow-lg" src={{ asset('storage/' . $information->thumbnail) }} alt="User profile picture" />
             <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{{$information->judul}}</h5>
             <div>
-                <a class="inline-flex items-center py-2 text-sm font-medium text-center">{{$information->deskripsi}}</a>
+                <p class="break-all inline-flex items-center py-2 text-sm font-medium text-center">{{$information->deskripsi}}</p>
             </div>
         </div>
     </div>

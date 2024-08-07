@@ -21,7 +21,7 @@ class RoleSeeder extends Seeder
         \DB::table('role')->insert([
             'id' => 2,
             'kode_role' => 'A002',
-            'nama_role' => 'Calon Mahasiswa'
+            'nama_role' => 'Camaba'
         ]);
     }
 }

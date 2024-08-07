@@ -2,39 +2,44 @@
 
 @section('content')
 
-@if (session()->has('info'))
-<div class="alert alert-success" role="alert">
-    {{ session()->get('info') }}
+@if(session('info'))
+<div class="mb-4 p-4 bg-green-200 text-green-800 rounded">
+    {{ session('info') }}
 </div>
 @endif
 
-@foreach ($errors->all() as $error)
-<div class="alert alert-danger" role="alert">
-    {{ $error }}
+@if($errors->any())
+<div class="mb-4 p-4 bg-red-200 text-red-800 rounded">
+    <strong class="font-bold">Whoops!</strong>
+    <ul class="list-disc list-inside">
+        @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+        @endforeach
+    </ul>
 </div>
-@endforeach
+@endif
 
 <div class="container my-10">
     <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 ">
         <form enctype="multipart/form-data" action="{{ route('mahasiswa.create.store') }}" method="POST">
             @csrf
-            <div>
-                <a href="{{ route('mahasiswa.index') }}" class="inline-flex items-center hover:text-red-800 font-medium rounded-lg text-sm px-2.5 py-2.5 text-center me-2 mb-2">
-                    <svg class="w-5 h-5 mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
+            <div class="flex justify-between mb-10">
+                <a href="{{ route('mahasiswa.index') }}" class="max-w-10 inline-flex items-center hover:text-red-800 font-medium rounded-lg text-sm text-center ">
+                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 8 14">
                         <path stroke="#b91c1c" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 1 1.3 6.326a.91.91 0 0 0 0 1.348L7 13" />
                     </svg>
                 </a>
+                <h2 class="text-2xl font-semibold ml-4">Daftar Mahasiswa</h2>
+                <div class="w-5">
+                </div>
             </div>
             <div>
-                <h5 class="text-xl text-center mb-4 font-bold text-gray-900 ">Tambah Mahasiswa</h5>
-            </div>
-            <div>
-                <label for="id_user" class="block mb-2 text-sm font-medium text-gray-900 " >Id User</label>
+                <label for="id_user" class="block mb-2 text-sm font-medium text-gray-900 ">Id User</label>
                 <input readonly value="{{Auth::user()->id}}" type="text" name="id_user" id="id_user" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" />
             </div>
             <div>
                 <label for="nama" class="block mb-2 text-sm font-medium text-gray-900 ">Nama Mahasiswa</label>
-                <input readonly value="{{Auth::user()->nama_user}}" type="text" name="nama" id="nama" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5"/>
+                <input readonly value="{{Auth::user()->nama_user}}" type="text" name="nama" id="nama" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5" />
             </div>
             <div>
                 <label for="alamat" class="block mb-2 text-sm font-medium text-gray-900 ">Alamat</label>
@@ -74,7 +79,7 @@
             </div>
             <div>
                 <label for="agama" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Agama</label>
-                <select id="agama" name ="agama" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 " required>
+                <select id="agama" name="agama" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 " required>
                     <option value="" disabled selected>Choose</option>
                     <option value="Kristen">Kristen</option>
                     <option value="Katolik">Katolik</option>
