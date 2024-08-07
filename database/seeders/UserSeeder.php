@@ -22,6 +22,17 @@ class UserSeeder extends Seeder
             'status' => 'Aktif',
             'profile_picture' => 'user.png',
         ]);
+
+        \DB::table('users')->insert([
+            'nama_user' => 'Felix Kurniawan',
+            'email' => 'felix123@gmail.com',
+            'password' => \Hash::make('12345678'), 
+            'tanggal_lahir' => '2003-07-18',
+            'bukti_pembayaran' => 'bukti_pembayaran.png',
+            'id_role' => '2',
+            'status' => 'Pending',
+            'profile_picture' => 'user.png',
+        ]);
         
     }
 }

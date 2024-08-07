@@ -47,6 +47,9 @@
                     <li>
                         <a href="/mahasiswa/create" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Daftar Mahasiswa</a>
                     </li>
+                    <li>
+                        <a href="{{ route('mahasiswa.status',Auth::user()->id) }}" class="block py-2 px-3 font-semibold text-slate-50 rounded hover:text-slate-400 hover:underline md:hover:bg-transparent md:hover:1 md:p-0">Cek Status Mahasiswa</a>
+                    </li>
                     @endif
                     @endauth
                 </ul>

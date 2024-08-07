@@ -8,7 +8,6 @@ use App\Http\Controllers\InformationController;
 use App\Http\Controllers\PendingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\AdminMiddleware;
-use App\Http\Middleware\LoginMiddleware;
 
 require __DIR__ . '/auth.php';
 
@@ -24,7 +23,6 @@ Route::get('/contact', function () {
 });
 
 Route::get('/pending', [PendingController::class, 'index'])->name('pending');
-Route::get('/pendingMahasiswa', [PendingController::class, 'index'])->name('pending_mahasiswa');
 
 
 Route::get("/user/register", [UserController::class, "register"])->name("user.register");
@@ -38,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
     Route::get("/mahasiswa/create", [MahasiswaController::class, "create"])->name("mahasiswa.create");
+    Route::get("/mahasiswa/status/{id}", [MahasiswaController::class, "status"])->name("mahasiswa.status");
     Route::post("/mahasiswa/create/store", [MahasiswaController::class, "store"])->name("mahasiswa.create.store");
     
 });

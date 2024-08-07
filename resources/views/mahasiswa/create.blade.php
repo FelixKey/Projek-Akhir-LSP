@@ -8,14 +8,9 @@
 </div>
 @endif
 
-@if($errors->any())
+@if(session('error'))
 <div class="mb-4 p-4 bg-red-200 text-red-800 rounded">
-    <strong class="font-bold">Whoops!</strong>
-    <ul class="list-disc list-inside">
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
+    {{ session('error') }}
 </div>
 @endif
 

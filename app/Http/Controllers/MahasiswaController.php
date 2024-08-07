@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MahasiswaController extends Controller
 {
@@ -20,6 +21,22 @@ class MahasiswaController extends Controller
         $mahasiswa = Mahasiswa::all();
         return view("mahasiswa.index", compact('mahasiswa'));
     }
+
+    public function status(Request $request, $id)
+    {
+
+        if (Auth::id() !== (int)$id) {
+            abort(403, 'Unauthorized action.');
+        }
+        $mahasiswa = Mahasiswa::where('id_user', $id)->first();
+
+        if (!$mahasiswa) {
+            return redirect()->route('mahasiswa.create')->with('error', 'Anda harus mendaftar sebagai mahasiswa terlebih dahulu.');
+        }
+
+        return view('mahasiswa.status', compact('mahasiswa'));
+    }
+
 
     public function create()
     {
