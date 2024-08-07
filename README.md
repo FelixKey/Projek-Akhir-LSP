@@ -1,7 +1,5 @@
 # Website Penerimaan Mahasiswa Baru
 
-<img src="PROJEK-AKHIR-LSP/logo.png">
-
 ## Developer
 - [Felix Kurniawan](https://github.com/FelixKey) - 2024250018 - Informatika
 - Bidang = Pengembang Web
