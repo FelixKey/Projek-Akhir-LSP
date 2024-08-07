@@ -23,7 +23,6 @@ class Mahasiswa extends Model
         'jenis_kelamin',
         'agama',
         'status',
-        'profile_picture',
         'id_user'
     ];
 

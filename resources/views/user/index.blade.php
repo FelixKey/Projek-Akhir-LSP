@@ -4,7 +4,7 @@
 @section('content')
 <div class="container">
   <div class="card m-4">
-    <h2 id="title_user">Data User</h2>
+  <h1 class="text-4xl text-center font-bold" id="title_user">DATA USER</h1>
     @if (session()->has('info'))
     <div class="alert alert-success" role="alert">
       {{ session()->get('info') }}

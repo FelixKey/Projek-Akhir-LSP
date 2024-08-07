@@ -14,7 +14,7 @@
 </head>
 
 <body>
-    <nav class="max-w-full bg-red-700">
+    <nav class="max-w-full bg-red-700 mb-10">
         <div class="flex flex-wrap items-center justify-between p-3">
             <a class="flex justify-center ml-16 space-x-3 rtl:space-x-reverse">
                 <img src="{{ asset('assets/images/logo.png') }}" class="h-10" alt="Logo" />
@@ -76,6 +76,9 @@
                 @endguest
                 @auth
                 <div class="flex items-center md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse my-4">
+                    <div class="px-4 py-3">
+                        <span class="block text-sm  text-slate-50 truncate">{{Auth::user()->nama_user}}</span>
+                    </div>
                     <button type="button" class="flex text-sm bg-slate-100 rounded-full md:me-0 focus:ring-4 focus:ring-slate-200" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                         <span class="sr-only">Open user menu</span>
                         <img class="object-cover w-8 h-8 rounded-full shadow-lg" src="{{ asset('storage/' . (Auth::user()->profile_picture ?? 'user.png')) }}" alt="User profile picture" />
@@ -83,8 +86,8 @@
                     <!-- Dropdown login menu -->
                     <div class="hidden my-4 text-base list-none bg-red-700 divide-y divide-gray-100 rounded-lg shadow border-2 border-gray-100" id="user-dropdown">
                         <div class="px-4 py-3">
-                            <span class="block text-sm text-slate-50">{{Auth::user()->email}}</span>
-                            <span class="block text-sm  text-slate-50 truncate">{{Auth::user()->nama_user}}</span>
+                            <span class="block text-sm my-2 text-slate-50 font-semibold">{{Auth::user()->role->nama_role}}</span>
+                            <span class="block text-sm my-2 text-slate-50">{{Auth::user()->email}}</span>
                         </div>
                         <ul class="py-2 font-semibold" aria-labelledby="user-menu-button">
                             <li>

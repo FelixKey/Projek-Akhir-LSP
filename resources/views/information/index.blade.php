@@ -35,9 +35,6 @@
               Thumbnail
             </th>
             <th scope="col" class="px-6 py-3">
-              Status
-            </th>
-            <th scope="col" class="px-6 py-3">
               Action
             </th>
           </tr>
@@ -49,7 +46,6 @@
             <td class="px-6 py-3">{{ $informationData->user->nama_user}}</td>
             <td class="px-6 py-3">{{ $informationData->deskripsi }}</td>
             <td class="px-6 py-3">{{ $informationData->thumbnail}}</td>
-            <td class="px-6 py-3">{{ $informationData->status}}</td>
             <td class="px-6 py-3">
               <!-- Button detail -->
               <div class="my-6">

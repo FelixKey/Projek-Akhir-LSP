@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -26,10 +28,41 @@ class UserController extends Controller
         return view("user.register", compact('user'));
     }
 
-    public function login()
+    // public function login()
+    // {
+    //     $user = User::all();
+    //     return view("user.login", compact('user'));
+    // }
+
+    public function loginView()
     {
-        $user = User::all();
-        return view("user.login", compact('user'));
+        return view('user.login');
+    }
+
+    public function login(Request $request)
+    {
+        // Validate login input
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        // Attempt to find the user by email
+        $user = User::where('email', $request->input('email'))->first();
+
+        if ($user && $user->canLogin()) {
+            // Attempt to log in the user
+            if (Auth::attempt(['email' => $request->input('email'), 'password' => $request->input('password')])) {
+                // Login successful
+                return redirect()->intended('home'); // Redirect to intended route or home
+            } else {
+                // Invalid credentials
+                return back()->withErrors(['password' => 'The provided password is incorrect.']);
+            }
+        } else {
+            // User is not active or doesn't exist
+            return back()->withErrors(['email' => 'The user is either inactive or does not exist.']);
+        }
     }
 
     public function detail(Request $request, $id)
@@ -50,6 +83,18 @@ class UserController extends Controller
 
     function store(Request $request)
     {
+
+        $validation = $request->validate([
+            'nama_user' => 'required|max:255',
+            'email' => [
+                'required',
+                Rule::notIn(User::where('email', $request->email)->pluck('email')->toArray())
+            ],
+            'password' => 'required',
+            'tanggal_lahir' => 'required',
+            'bukti_pembayaran' => 'required',
+        ]);
+
         $model = $this->model;
         $model->id = $request->id;
         $model->nama_user = $request->nama_user;
@@ -106,7 +151,6 @@ class UserController extends Controller
 
         return redirect()->back()->withErrors(['error' => 'User not found.']);
     }
-
 
     public function edit(Request $request, $id)
     {

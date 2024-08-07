@@ -3,11 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Mahasiswa;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class MahasiswaController extends Controller
 {
+
+    function __construct()
+    {
+        $this->model = new Mahasiswa;
+        $this->table = $this->model->table;
+        $this->loc = 'mahasiswa.';
+    }
+
     public function index(){
         $mahasiswa = Mahasiswa::all();
         return view("mahasiswa.index", compact('mahasiswa'));
@@ -55,6 +62,36 @@ class MahasiswaController extends Controller
         } else {
             return redirect()->route("mahasiswa.index")->withErrors(['errors' => 'Data Mahasiswa tidak valid']);
         }
+    }
+
+    function store(Request $request)
+    {
+
+        $validation = $request->validate([
+            'nama' => 'required|max:255',
+            'alamat' => 'required',
+            'no_telp' => 'required',
+            'tanggal_lahir' => 'required',
+            'program_studi' => 'required',
+            'jenis_kelamin' => 'required',
+            'agama' => 'required',
+        ]);
+
+        $model = $this->model;
+        $model->id = $request->id;
+        $model->nama = $request->nama;
+        $model->alamat = $request->alamat;
+        $model->no_telp = $request->no_telp;
+        $model->asal_sekolah = $request->asal_sekolah;
+        $model->tanggal_lahir = $request->tanggal_lahir;
+        $model->program_studi = $request->program_studi;
+        $model->jenis_kelamin = $request->jenis_kelamin;
+        $model->agama = $request->agama;
+        $model->status = "Belum Divalidasi";
+        $model->id_user = $request->id_user;
+        $model->save();
+        $request->session()->flash("info", "Data baru berhasil ditambahkan");
+        return redirect()->route('mahasiswa.index');
     }
 
     public function edit(Request $request, $id)

@@ -33,6 +33,11 @@ class User extends Authenticatable
         return $this->role->kode_role == 'A002';
     }
 
+    public function canLogin()
+    {
+        return $this->status === 'Aktif';
+    }
+
     /**
      * The attributes that are mass assignable.
      *
