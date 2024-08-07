@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
             'password' => \Hash::make('12345678'), 
             'tanggal_lahir' => '2003-07-18',
             'bukti_pembayaran' => 'bukti_pembayaran.png',
-            'id_role' => '1',
+            'id_role' => '1', //admin
             'status' => 'Aktif',
             'profile_picture' => 'user.png',
         ]);
@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             'password' => \Hash::make('12345678'), 
             'tanggal_lahir' => '2003-07-18',
             'bukti_pembayaran' => 'bukti_pembayaran.png',
-            'id_role' => '2',
+            'id_role' => '2', //calon mahasiswa
             'status' => 'Pending',
             'profile_picture' => 'user.png',
         ]);

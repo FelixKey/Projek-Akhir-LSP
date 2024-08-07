@@ -5,7 +5,7 @@
 - Bidang = Pengembang Web
 
 ## Instalasi
-- Framework = Laravel
+- Framework = Laravel 11.19.0
 - Framework CSS = Tailwind
 - Flowbite
 - Database = MySQL(phpmyadmin)
