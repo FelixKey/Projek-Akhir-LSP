@@ -2,7 +2,6 @@
 
 @section('content')
 
-@if (session()->has('info'))
 @if(session('info'))
     <div class="mb-4 p-4 bg-green-200 text-green-800 rounded">
         {{ session('info') }}
@@ -46,7 +45,5 @@
         </form>
     </div>
 </div>
-
-
 
 @endsection

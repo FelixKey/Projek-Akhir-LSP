@@ -41,7 +41,9 @@ class MahasiswaController extends Controller
     public function create()
     {
         $mahasiswa = Mahasiswa::all();
-        return view("mahasiswa.create", compact('mahasiswa'));
+        $program_studi=['Informatika','Sistem Informasi','Teknik Elektro','Manajemen Informatika','Manajemen','Akuntansi'];
+        $kepercayaan=['Kristen','Katolik','Islam','Buddha','Hindu','Konghucu','Lainnya'];
+        return view("mahasiswa.create", compact('mahasiswa','program_studi','kepercayaan'));
     }
 
     public function validateMahasiswa(Request $request, $id)

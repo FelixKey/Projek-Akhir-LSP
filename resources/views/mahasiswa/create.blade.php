@@ -56,12 +56,9 @@
                 <label for="program_studi" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Program Studi</label>
                 <select id="program_studi" name="program_studi" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 " required>
                     <option value="" disabled selected>Choose</option>
-                    <option value="Informatika">Informatika</option>
-                    <option value="Sistem Informasi">Sistem Informasi</option>
-                    <option value="Teknik Elektro">Teknik Elektro</option>
-                    <option value="Manajemen Informatika">Manajemen Informatika</option>
-                    <option value="Manajemen">Manajemen</option>
-                    <option value="Akuntansi">Akuntansi</option>
+                    @foreach($program_studi as $key=>$jurusan)
+                        <option value="{{$jurusan}}">{{$jurusan}}</option>
+                    @endforeach
                 </select>
             </div>
             <div>
@@ -76,13 +73,9 @@
                 <label for="agama" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Agama</label>
                 <select id="agama" name="agama" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 " required>
                     <option value="" disabled selected>Choose</option>
-                    <option value="Kristen">Kristen</option>
-                    <option value="Katolik">Katolik</option>
-                    <option value="Islam">Islam</option>
-                    <option value="Buddha">Buddha</option>
-                    <option value="Hindu">Hindu</option>
-                    <option value="Konghucu">Konghucu</option>
-                    <option value="Lainnya">Lainnya</option>
+                    @foreach($kepercayaan as $key=>$agama)
+                        <option value="{{$agama}}">{{$agama}}</option>
+                    @endforeach
                 </select>
             </div>
             <button type="submit" class=" text-white mt-10 bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Submit</button>
